@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Blog Pessoal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --text: #34495e;
+            --border: #bdc3c7;
+        }
+
+        body {
+            font-family: 'Georgia', 'Garamond', serif;
+            color: var(--text);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 40px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-bottom: 3px solid var(--accent);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--accent);
+            font-size: 1.2em;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            color: #7f8c8d;
+            font-size: 0.95em;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--primary);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 15px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95em;
+            padding: 8px 15px;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        /* Seções */
+        section {
+            background: white;
+            padding: 50px;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section h2 {
+            font-size: 2.2em;
+            color: var(--primary);
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 15px;
+            font-weight: 400;
+        }
+
+        /* Sobre */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            color: #555;
+        }
+
+        .about-image {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, var(--accent), #3498db);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 80px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+        }
+
+        /* Posts */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .post {
+            border-left: 4px solid var(--accent);
+            padding: 25px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.2);
+        }
+
+        .post-date {
+            color: var(--accent);
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .post h3 {
+            color: var(--primary);
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .post p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: var(--primary);
+            margin-left: 5px;
+        }
+
+        /* Habilidades */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .skill {
+            background: linear-gradient(135deg, var(--primary), #34495e);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .skill:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .skill-name {
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        /* Contato */
+        .contact-content {
+            text-align: center;
+        }
+
+        .contact-info {
+            margin: 30px 0;
+            font-size: 1.1em;
+        }
+
+        .contact-info p {
+            margin: 15px 0;
+        }
+
+        .contact-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .social-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .social-btn:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.95em;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            section {
+                padding: 30px 20px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .about-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            nav ul {
+                gap: 20px;
+            }
+
+            .container {
+                margin: 40px auto;
+            }
+        }
+
+        /* Scroll smooth */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1>Seu Nome Aqui</h1>
+            <p class="subtitle">Escritor • Pensador • Criador</p>
+            <p class="tagline">Bem-vindo ao meu espaço pessoal onde compartilho histórias, ideias e reflexões sobre a vida.</p>
+        </div>
+    </header>
+
+    <!-- Navegação -->
+    <nav>
+        <ul>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#habilidades">Habilidades</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        <!-- Seção Sobre -->
+        <section id="sobre">
+            <h2>Sobre Mim</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p><strong>Olá! Meu nome é [Seu Nome]</strong></p>
+                    <p>Sou uma pessoa apaixonada por [seu interesse principal]. Ao longo dos anos, desenvolvi uma paixão por compartilhar conhecimentos e conexões autênticas com as pessoas ao meu redor.</p>
+                    <p>Neste blog, você encontrará posts sobre [tópicos principais], reflexões sobre [tema], e histórias que moldaram meu caminho.</p>
+                    <p>Quando não estou escrevendo, você me encontra [atividade favorita], experimentando [hobby], ou simplesmente apreciando os momentos simples da vida.</p>
+                </div>
+                <div class="about-image">👤</div>
+            </div>
+        </section>
+
+        <!-- Seção Blog -->
+        <section id="blog">
+            <h2>Últimos Posts</h2>
+            <div class="posts-grid">
+                <div class="post">
+                    <p class="post-date">📅 15 de Maio, 2024</p>
+                    <h3>Título do Seu Primeiro Post</h3>
+                    <p>Uma introdução envolvente sobre o tema do post. Comece com uma anedota, pergunta ou afirmação interessante que capture a atenção do leitor.</p>
+                    <a href="#" class="read-more">Ler mais →</a>
+                </div>
+
+                <div class="post">
+                    <p class="post-date">📅 10 de Maio, 2024</p>
+                    <h3>Aprendi Algo Novo Essa Semana</h3>
+                    <p>Compartilhe uma lição valiosa que aprendeu. Descreva brevemente o que, como e por que importa para você. Mantenha o tom pessoal e autêntico.</p>
+                    <a href="#" class="read-more">Ler mais →</a>
+                </div>
+
+                <div class="post">
+                    <p class="post-date">📅 5 de Maio, 2024</p>
+                    <h3>Reflexões Sobre [Seu Tema]</h3>
+                    <p>Um post reflexivo onde você explora um tópico que o interessa profundamente. Inclua suas experiências pessoais e perspectivas únicas.</p>
+                    <a href="#" class="read-more">Ler mais →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Habilidades -->
+        <section id="habilidades">
+            <h2>Habilidades & Interesses</h2>
+            <div class="skills-container">
+                <div class="skill">
+                    <div class="skill-name">🎯 Criatividade</div>
+                </div>
+                <div class="skill">
+                    <div class="skill-name">📚 Escrita</div>
+                </div>
+                <div class="skill">
+                    <div class="skill-name">💡 Inovação</div>
+                </div>
+                <div class="skill">
+                    <div class="skill-name">🤝 Comunicação</div>
+                </div>
+                <div class="skill">
+                    <div class="skill-name">🌍 Abertura</div>
+                </div>
+                <div class="skill">
+                    <div class="skill-name">⚡ Adaptabilidade</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Contato -->
+        <section id="contato">
+            <h2>Vamos Conversar?</h2>
+            <div class="contact-content">
+                <p>Adoraria ouvir de você! Se você tem perguntas, sugestões ou simplesmente quer bater um papo, não hesite em entrar em contato.</p>
+                
+                <div class="contact-info">
+                    <p>📧 Email: <a href="mailto:seu.email@exemplo.com" class="contact-link">seu.email@exemplo.com</a></p>
+                    <p>📱 Telefone: <a href="tel:+55119999999" class="contact-link">+55 (11) 99999-9999</a></p>
+                </div>
+
+                <div class="social-links">
+                    <a href="#" class="social-btn" title="LinkedIn">in</a>
+                    <a href="#" class="social-btn" title="Twitter">𝕏</a>
+                    <a href="#" class="social-btn" title="GitHub">⚙</a>
+                    <a href="#" class="social-btn" title="Instagram">📷</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Seu Nome. Todos os direitos reservados. Feito com ❤️</p>
+    </footer>
+
+    <script>
+        // Animações ao scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeIn 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Destaque suave de navegação
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                navLinks.forEach(l => l.style.color = 'white');
+                link.style.color = 'var(--accent)';
+            });
+        });
+    </script>
+</body>
+</html>
